@@ -5,7 +5,7 @@
 
 version = "0.61.5"
 
-source = { :git => ENV['INSTALL_YOGA_FROM_LOCATION'] || 'https://github.com/czb365/Yoga.git' }
+source = { :git => ENV['INSTALL_YOGA_FROM_LOCATION'] || 'https://github.com/rnPrivateSpec/Yoga.git' }
 if version == '1000.0.0'
   # This is an unpublished version, use the latest commit hash of the react-native repo, which we’re presumably in.
   source[:commit] = `git rev-parse HEAD`.strip
