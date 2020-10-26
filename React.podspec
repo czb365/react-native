@@ -8,17 +8,17 @@ require "json"
 
 version = "0.61.5"
 
-source = { :git => 'https://github.com/facebook/react-native.git' }
+source = { :git => 'https://github.com/rnPrivateSpec/react-native.git' }
 if version == '1000.0.0'
   # This is an unpublished version, use the latest commit hash of the react-native repo, which we’re presumably in.
   source[:commit] = `git rev-parse HEAD`.strip
 else
-  source[:tag] = "v#{version}"
+  source[:tag] = "v0.61.5.1"
 end
 
 Pod::Spec.new do |s|
   s.name                   = "React"
-  s.version                = version
+  s.version                = "0.61.5.1"
   s.summary                = "description"
   s.description            = <<-DESC
                                React Native apps are built using the React JS
@@ -41,7 +41,7 @@ Pod::Spec.new do |s|
   s.preserve_paths         = "package.json", "LICENSE", "LICENSE-docs"
   s.cocoapods_version      = ">= 1.2.0"
 
-  s.dependency "React-Core", version
+  s.dependency "React-Core", "0.61.5.1"
   s.dependency "React-Core/DevSupport", version
   s.dependency "React-Core/RCTWebSocket", version
   s.dependency "React-RCTActionSheet", version

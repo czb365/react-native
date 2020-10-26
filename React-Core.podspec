@@ -13,7 +13,7 @@ if version == '1000.0.0'
   # This is an unpublished version, use the latest commit hash of the react-native repo, which we’re presumably in.
   source[:commit] = `git rev-parse HEAD`.strip
 else
-  source[:tag] = "v#{version}"
+  source[:tag] = "v0.61.5.1"
 end
 
 folly_compiler_flags = '-DFOLLY_NO_CONFIG -DFOLLY_MOBILE=1 -DFOLLY_USE_LIBCPP=1 -Wno-comma -Wno-shorten-64-to-32'
@@ -37,7 +37,7 @@ header_subspecs = {
 
 Pod::Spec.new do |s|
   s.name                   = "React-Core"
-  s.version                = version
+  s.version                = "0.61.5.1"
   s.summary                = "The core of React Native."
   s.homepage               = "http://facebook.github.io/react-native/"
   s.license                = "MIT"
@@ -72,14 +72,14 @@ Pod::Spec.new do |s|
     ss.source_files = "React/DevSupport/*.{h,mm,m}",
                       "React/Inspector/*.{h,mm,m}"
 
-    ss.dependency "React-Core/Default", version
-    ss.dependency "React-Core/RCTWebSocket", version
+    ss.dependency "React-Core/Default"
+    ss.dependency "React-Core/RCTWebSocket"
     ss.dependency "React-jsinspector", version
   end
 
   s.subspec "RCTWebSocket" do |ss|
     ss.source_files = "Libraries/WebSocket/*.{h,m}"
-    ss.dependency "React-Core/Default", version
+    ss.dependency "React-Core/Default"
   end
 
   # Add a subspec containing just the headers for each
