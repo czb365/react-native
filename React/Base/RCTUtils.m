@@ -20,6 +20,8 @@
 #import "RCTAssert.h"
 #import "RCTLog.h"
 
+static NSMutableDictionary<NSString* ,NSString *> *imagePathMap;
+
 NSString *const RCTErrorUnspecified = @"EUNSPECIFIED";
 
 // Returns the Path of Home directory
@@ -31,6 +33,15 @@ NSString *__nullable RCTHomePathForURL(NSURL *__nullable URL);
 
 // Determines if a given image URL refers to a image in Home directory (~)
 BOOL RCTIsHomeAssetURL(NSURL *__nullable imageURL);
+
+void RCTSaveImagePathMap(NSDictionary<NSString* ,NSString *> *map) {
+    if (!imagePathMap) {
+        imagePathMap = [[NSMutableDictionary alloc]init];
+    }
+    for (NSString *key in map) {
+        imagePathMap[key] = map[key];
+    }
+}
 
 static NSString *__nullable _RCTJSONStringifyNoRetry(id __nullable jsonObject, NSError **error)
 {
@@ -716,12 +727,22 @@ static NSBundle *bundleForPath(NSString *key)
   return bundleCache[key];
 }
 
+NSURL *RCTHandleLocalImageURL(NSURL *imageURL) {
+    NSString *name = imageURL.absoluteString.lastPathComponent;
+    NSString *path = imagePathMap[name];
+    if (path != nil && path.length > 5) {
+        return [NSURL fileURLWithPath:path];
+    }
+    return imageURL;
+}
+
 UIImage *__nullable RCTImageFromLocalBundleAssetURL(NSURL *imageURL)
 {
   if (![imageURL.scheme isEqualToString:@"file"]) {
     // We only want to check for local file assets
     return nil;
   }
+  imageURL = RCTHandleLocalImageURL(imageURL);
   // Get the bundle URL, and add the image URL
   // Note that we have to add both host and path, since host is the first "assets" part
   // while path is the rest of the URL
@@ -731,6 +752,7 @@ UIImage *__nullable RCTImageFromLocalBundleAssetURL(NSURL *imageURL)
 
 UIImage *__nullable RCTImageFromLocalAssetURL(NSURL *imageURL)
 {
+  imageURL = RCTHandleLocalImageURL(imageURL);
   NSString *imageName = RCTBundlePathForURL(imageURL);
 
   NSBundle *bundle = nil;

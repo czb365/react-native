@@ -26,7 +26,8 @@ RCT_EXTERN id RCTJSONClean(id object);
 
 // Get MD5 hash of a string
 RCT_EXTERN NSString *RCTMD5Hash(NSString *string);
-
+RCT_EXTERN void RCTSaveImagePathMap(NSDictionary<NSString* ,NSString *> *map);
+RCT_EXTERN NSURL *RCTHandleLocalImageURL(NSURL *imageURL);
 // Check if we are currently on the main queue (not to be confused with
 // the main thread, which is not necessarily the same thing)
 // https://twitter.com/olebegemann/status/738656134731599872
